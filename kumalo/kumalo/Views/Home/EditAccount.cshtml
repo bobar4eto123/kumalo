@@ -1,0 +1,26 @@
+﻿@model kumalo.Models.AccountModel;
+
+<h1><center>Edit Account</center></h1>
+<br />
+<hr />
+<br />
+<form asp-controller="Home" asp-action="EditAccount" method="post">
+    <label>First name</label>
+    <input asp-for="@Model.FirstName" type="text" />
+    <label>Last name</label>
+    <input asp-for="@Model.LastName" type="text" />
+    <label>Age</label>
+    <input asp-for="@Model.Age" type="text" />
+    <label>City</label>
+    <input asp-for="@Model.City" type="text" />
+    <label>PhoneNumber</label>
+    <input asp-for="@Model.PhoneNumber" type="text" />
+    <label>Description</label>
+    <input asp-for="@Model.Description" type="text" />
+
+    <input type="submit" value="Save changes" />
+</form>
+<br />
+<hr />
+<br />
+

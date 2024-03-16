@@ -1,0 +1,19 @@
+﻿
+
+@model kumalo.Models.UserLoginAndRegisterModel;
+
+<h1><center>Register</center></h1>
+<br />
+<hr />
+<br />
+<form asp-controller="Home" asp-action="Register" method="post">
+    <label>Username</label>
+    <input asp-for="@Model.Username" type="text" />
+    <label>Password</label>
+    <input asp-for="@Model.Password" type="text" />
+    <label>Repeat password</label>
+
+    @*<input asp-for="@Model.Password" type="text" />*@
+
+    <input type="submit" value="Register" />
+</form>

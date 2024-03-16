@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model IEnumerable<kumalo.Models.UserDisplayModel>;
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to KUMALO</h1>
+</div>
+<section class="all-users-section">
+    <section class="all-users-header">
+        <h1 class="title">Our Users</h1>
+    </section>
+    <section class="users-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.City</td>
+                        <td>@user.Description</td>
+                        <td><a asp-controller="Home" asp-action="SeeUser" method=get asp-route-id=@user.Id>See more</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</section>
