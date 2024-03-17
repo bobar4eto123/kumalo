@@ -41,9 +41,29 @@ namespace kumalo.Controllers
             return View(allUsersToBeDisplayed);
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(UserLoginAndRegisterModel userLoginModel)
+        {
+            User? userTryingToLogin = _context.Users.FirstOrDefault(u => u.Username == userLoginModel.Username);
+            if (userTryingToLogin == null)
+            {
+                return NotFound();
+            }
+            else if(userTryingToLogin.Password != userLoginModel.Password)
+            {
+                return Error();
+            }
+            else
+            {
+                /// loggedUser = userTryingToLogin
+                return RedirectToAction("Index");
+            }      
         }
 
         [HttpGet]
