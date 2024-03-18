@@ -17,7 +17,7 @@ namespace kumalo.Controllers
         public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
-            this._context = context;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -79,7 +79,7 @@ namespace kumalo.Controllers
             _context.Users.Add(newUser);
             _context.SaveChanges();
 
-
+            Login(userRegisterModel);
             ////
             /// Tozi newUser da bude lognatiq user.
             ///

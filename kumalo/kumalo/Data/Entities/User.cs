@@ -4,19 +4,6 @@ namespace kumalo.Data.Entities
 {
     public class User
     {
-        public User(string username, string password)
-        {
-            this.Username = username;
-            this.Password = password;
-            this.FirstName = "";
-            this.LastName = "";
-            this.Age = 0;
-            this.City = "";
-            this.PhoneNumber = "";
-            this.Description = "";
-            this.LikesCount = 0;
-        }
-
         [Required]
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
@@ -46,5 +33,33 @@ namespace kumalo.Data.Entities
 
         [Required]
         public int LikesCount { get; set; }
+
+        public User(string username, string password)
+        {
+            this.Username = username;
+            this.Password = password;
+            this.FirstName = "";
+            this.LastName = "";
+            this.Age = 0;
+            this.City = "";
+            this.PhoneNumber = "";
+            this.Description = "";
+            this.LikesCount = 0;
+        }
+
+        public User(string username, string password, string firstName, string lastName, int age, string city, string PhoneNumber, string description)
+        {
+            this.Username = username;
+            this.Password = password;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Age = age;
+            this.City = city;
+            this.PhoneNumber = PhoneNumber;
+            this.Description = description;
+            this.LikesCount = 0;
+        }
+
+
     }
 }
