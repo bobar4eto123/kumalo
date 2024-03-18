@@ -22,6 +22,12 @@ namespace kumalo.Controllers
 
         public IActionResult Index()
         {
+            //Setting session data
+            /*
+            HttpContext.Session.SetString("Username", "Gosho");
+            HttpContext.Session.SetString("LastName", "Marinov");
+            HttpContext.Session.SetInt32("Age", 22);
+            */
             List<UserDisplayModel> allUsersToBeDisplayed = new List<UserDisplayModel>();
 
             foreach (User user in _context.Users)
@@ -51,19 +57,14 @@ namespace kumalo.Controllers
         public IActionResult Login(UserLoginAndRegisterModel userLoginModel)
         {
             User? userTryingToLogin = _context.Users.FirstOrDefault(u => u.Username == userLoginModel.Username);
-            if (userTryingToLogin == null)
+            if (userTryingToLogin == null || userTryingToLogin.Password != userLoginModel.Password)
             {
                 return NotFound();
             }
-            else if(userTryingToLogin.Password != userLoginModel.Password)
-            {
-                return Error();
-            }
-            else
-            {
-                /// loggedUser = userTryingToLogin
-                return RedirectToAction("Index");
-            }      
+
+            //HttpContext.Session.SetString("UserId", userTryingToLogin.Id);
+            return RedirectToAction("Index");
+    
         }
 
         [HttpGet]
@@ -79,7 +80,6 @@ namespace kumalo.Controllers
             _context.Users.Add(newUser);
             _context.SaveChanges();
 
-            Login(userRegisterModel);
             ////
             /// Tozi newUser da bude lognatiq user.
             ///
@@ -96,9 +96,17 @@ namespace kumalo.Controllers
         [HttpPost]
         public IActionResult EditAccount(AccountModel accountModel)
         {
-            User loggedUser = new User("gosho", "azisEBog12!3"); // = HttpContext.Session.GetObject<Users>(loggedUser);
+            /*
+            string userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+               
+            }
+            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == userId);
             ///
             ///
+            */
+            User loggedUser = null; //Za da nqma error
             loggedUser.FirstName = accountModel.FirstName;
             loggedUser.LastName = accountModel.LastName;
             loggedUser.Age = accountModel.Age;
@@ -114,7 +122,7 @@ namespace kumalo.Controllers
         [HttpGet]
         public IActionResult SeeUser(string id)
         {
-            User user = _context.Users.FirstOrDefault(u => u.Id == id);
+            //User user = _context.Users.FirstOrDefault(u => u.Id == id);
 
             if (user == null)
             {

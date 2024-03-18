@@ -10,6 +10,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// Adding Session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options => { 
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 
 var app = builder.Build();
 
@@ -27,6 +35,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+// Adding session
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
