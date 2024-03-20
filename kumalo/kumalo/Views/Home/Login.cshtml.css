@@ -9,6 +9,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background-size: cover;
+    background-position: center;
 }
 
 .wrapper {
@@ -91,6 +93,10 @@ body {
     font-size: 16px;
     color: #333;
     font-weight: 600;
+}
+
+.wrapper .btn:hover {
+    background: rgba(255, 255, 255, .6);
 }
 
 .wrapper .register-link {
