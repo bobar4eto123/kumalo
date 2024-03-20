@@ -1,23 +1,17 @@
 ﻿@using kumalo.Data.Entities;
-@using Microsoft.AspNetCore.Identity;
+
 @{
     ViewData["Title"] = "Home Page";
-    User currentUser = null;
-
-    UserManager<User> userManager = Context.RequestServices.GetService(typeof(UserManager<User>)) as UserManager<User>;
-    if (userManager != null)
-    {
-        currentUser = await userManager.GetUserAsync(User);
-    }
+    User? loggedUser = this.ViewData["loggedUser"] as User; //possible null
 }
 
 @model IEnumerable<kumalo.Models.UserDisplayModel>;
 
 <div class="text-center">
     <h1 class="display-4">Welcome to KUMALO</h1>
-    @if (currentUser != null && !string.IsNullOrEmpty(currentUser.Username))
+    @if (loggedUser != null && !string.IsNullOrEmpty(loggedUser.Username))
     {
-        <p>Welcome, @currentUser.Username</p>
+        <p>Welcome, @loggedUser.Username</p>
     }
     else
     {

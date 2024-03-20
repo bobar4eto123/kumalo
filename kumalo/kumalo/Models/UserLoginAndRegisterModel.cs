@@ -5,10 +5,10 @@ namespace kumalo.Models
 {
     public class UserLoginAndRegisterModel
     {
-        [Required]
+        [Required(ErrorMessage = "Username field is required.")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Username field is required.")]
         public string Password { get; set; }
     }
 }

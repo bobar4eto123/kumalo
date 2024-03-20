@@ -2,6 +2,7 @@ using kumalo.Data;
 using kumalo.Data.Entities;
 using kumalo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace kumalo.Controllers
             HttpContext.Session.SetString("LastName", "Marinov");
             HttpContext.Session.SetInt32("Age", 22);
             */
+
             List<UserDisplayModel> allUsersToBeDisplayed = new List<UserDisplayModel>();
 
             foreach (User user in _context.Users)
@@ -44,6 +46,9 @@ namespace kumalo.Controllers
                 });
             }
 
+            string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
+            this.ViewData["loggedUser"] = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
+
             return View(allUsersToBeDisplayed);
         }
 
@@ -56,15 +61,26 @@ namespace kumalo.Controllers
         [HttpPost]
         public IActionResult Login(UserLoginAndRegisterModel userLoginModel)
         {
+            if (!this.ModelState.IsValid)
+                return View();
+
             User? userTryingToLogin = _context.Users.FirstOrDefault(u => u.Username == userLoginModel.Username);
-            if (userTryingToLogin == null || userTryingToLogin.Password != userLoginModel.Password)
+
+            if (userTryingToLogin == null) 
             {
-                return NotFound();
+                this.ModelState.AddModelError("loginError", "User does not exist.");
+                return View();
+            }
+            if (userTryingToLogin.Password != userLoginModel.Password)
+            {
+                userLoginModel.Password = string.Empty;
+                this.ModelState.AddModelError("loginError", "Incorrect password.");
+                return View(userLoginModel);
             }
 
-            //HttpContext.Session.SetString("UserId", userTryingToLogin.Id);
-            return RedirectToAction("Index");
-    
+            HttpContext.Session.SetString("loggedUserId", userTryingToLogin.Id);
+
+            return RedirectToAction("Index"); 
         }
 
         [HttpGet]
@@ -76,13 +92,15 @@ namespace kumalo.Controllers
         [HttpPost]
         public IActionResult Register(UserLoginAndRegisterModel userRegisterModel)
         {
+            //validation
+            //
+            //
+
             User newUser = new User(userRegisterModel.Username, userRegisterModel.Password);
             _context.Users.Add(newUser);
             _context.SaveChanges();
 
-            ////
-            /// Tozi newUser da bude lognatiq user.
-            ///
+            HttpContext.Session.SetString("loggedUserId", newUser.Id);
 
             return RedirectToAction("EditAccount");
         }
@@ -106,7 +124,8 @@ namespace kumalo.Controllers
             ///
             ///
             */
-            User loggedUser = null; //Za da nqma error
+
+            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId"));
             loggedUser.FirstName = accountModel.FirstName;
             loggedUser.LastName = accountModel.LastName;
             loggedUser.Age = accountModel.Age;

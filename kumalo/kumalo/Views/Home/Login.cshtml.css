@@ -75,9 +75,9 @@ body {
     text-decoration: none;
 }
 
-    .remember-box a:hover {
-        text-decoration: underline;
-    }
+.remember-box a:hover {
+    text-decoration: underline;
+}
 
 .wrapper .btn {
     width: 100%;
@@ -104,6 +104,6 @@ body {
     font-weight: 600;
 }
 
-    .register-link:hover {
-        text-decoration: underline;
-    }
+.register-link:hover {
+    text-decoration: underline;
+}

@@ -10,6 +10,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 // Adding Session
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => { 
@@ -35,6 +36,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
 // Adding session
 app.UseSession();
 
