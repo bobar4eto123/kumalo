@@ -122,7 +122,7 @@ namespace kumalo.Controllers
         [HttpGet]
         public IActionResult SeeUser(string id)
         {
-            //User user = _context.Users.FirstOrDefault(u => u.Id == id);
+            User user = _context.Users.FirstOrDefault(u => u.Id == id);
 
             if (user == null)
             {

@@ -1,19 +1,36 @@
-﻿
+﻿@model kumalo.Models.UserLoginAndRegisterModel;
 
-@model kumalo.Models.UserLoginAndRegisterModel;
+@{
+    ViewData["Title"] = "Login";
+}
 
-<h1><center>Login</center></h1>
-<br />
-<hr />
-<br />
-<form asp-controller="Home" asp-action="Login" method="post">
-    <label>Username</label>
-    <input asp-for="@Model.Username" type="text" />
-    <label>Password</label>
-    <input asp-for="@Model.Password" type="text" />
-    <input type="submit" value="Login" />
-</form>
-<br />
-<hr />
-<br />
-<a asp-controller="Home" asp-action="Register"><center>You do not have an account? Register here</center></a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+        <div class="wrapper">
+            <form asp-controller="Home" asp-action="Login" method="post">
+                <h1>Login</h1>
+                    <div class="input-box">
+                        <input asp-for="@Model.Username" type="text" placeholder="Username" required/>
+                        <i class='bx bxs-user'></i>
+                    </div>
+                    <div class="input-box">
+                        <input asp-for="@Model.Password" type="text" placeholder="Password" required/>
+                        <i class='bx bxs-lock-alt'></i>
+                    </div>
+                    <div class="remember-box">
+                        <label><input type="checkbox">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                    <div class="register-link">
+                        <a class="text-white text-decoration-none" asp-area="" asp-controller="Home" asp-action="Register">You don't have an account? Register here</a>
+                    </div>
+            </form>
+        </div>
+</body>
+</html>
