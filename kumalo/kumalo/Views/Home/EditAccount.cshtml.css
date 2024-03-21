@@ -64,18 +64,3 @@ body {
     .wrapper .btn:hover {
         background: rgba(255, 255, 255, .6);
     }
-
-.wrapper .register-link {
-    font-size: 14.5px;
-    text-align: center;
-    margin: 20px 0 15px;
-}
-
-.register-link {
-    color: #fff;
-    font-weight: 600;
-}
-
-    .register-link:hover {
-        text-decoration: underline;
-    }

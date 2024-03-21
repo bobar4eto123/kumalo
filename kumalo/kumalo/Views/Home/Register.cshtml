@@ -1,19 +1,38 @@
-﻿
+﻿@model kumalo.Models.UserLoginAndRegisterModel;
 
-@model kumalo.Models.UserLoginAndRegisterModel;
+@{
+    ViewData["Title"] = "Register";
+}
 
-<h1><center>Register</center></h1>
-<br />
-<hr />
-<br />
-<form asp-controller="Home" asp-action="Register" method="post">
-    <label>Username</label>
-    <input asp-for="@Model.Username" type="text" />
-    <label>Password</label>
-    <input asp-for="@Model.Password" type="text" />
-    <label>Repeat password</label>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+<center>
+        <div class="wrapper">
+            <form asp-controller="Home" asp-action="Register" method="post">
+                <h1>Register</h1>
+                    <div class="input-box">
+                        <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
+                        border: 2px solid rgba(255, 255, 255, .2); border-radius: 40px; font-size: 16px; color: #fff; padding: 20px 45px 20px 20px;"
+                        <input asp-for="@Model.Username" type="text" placeholder="Username"/>
+                        <i class='bx bxs-user'></i>
+                    </div>
 
+                    <div class="input-box">
+                        <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
+                        border: 2px solid rgba(255, 255, 255, .2); border-radius: 40px; font-size: 16px; color: #fff; padding: 20px 45px 20px 20px;"
+                        <input asp-for="@Model.Password" type="text" placeholder="Password"/>
+                        <i class='bx bxs-lock-alt'></i>
+                    </div>
+                    <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+</center>
+</body>
+</html>
     @*<input asp-for="@Model.Password" type="text" />*@
-
-    <input type="submit" value="Register" />
-</form>
