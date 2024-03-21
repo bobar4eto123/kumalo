@@ -12,16 +12,23 @@
 <form asp-controller="Home" asp-action="EditAccount" method="post">
     <label>First name</label>
     <input asp-for="@Model.FirstName" type="text" />
+    <span asp-validation-for="FirstName" class="text-danger"></span>
     <label>Last name</label>
     <input asp-for="@Model.LastName" type="text" />
+    <span asp-validation-for="LastName" class="text-danger"></span>
     <label>Age</label>
     <input asp-for="@Model.Age" type="text" />
+    <span asp-validation-for="Age" class="text-danger"></span>
     <label>City</label>
     <input asp-for="@Model.City" type="text" />
+    <span asp-validation-for="City" class="text-danger"></span>
     <label>Phone Number</label>
     <input asp-for="@Model.PhoneNumber" type="text" />
+    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
     <label>Description</label>
     <input asp-for="@Model.Description" type="text" />
+    <span asp-validation-for="Description" class="text-danger"></span>
+
 
     <input type="submit" value="Save changes" />
 </form>
