@@ -8,7 +8,7 @@ namespace kumalo.Models
         [Required(ErrorMessage = "Username field is required.")]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "Username field is required.")]
+        [Required(ErrorMessage = "Password field is required.")]
         public string Password { get; set; }
     }
 }

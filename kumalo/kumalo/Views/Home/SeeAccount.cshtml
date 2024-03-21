@@ -1,0 +1,52 @@
+﻿@using kumalo.Data.Entities;
+@model kumalo.Models.UserDisplayModel;
+
+@{
+    User? loggedUser = this.ViewData["loggedUser"] as User; //possible null
+}
+
+<h1><center>Account Info</center></h1>
+<br />
+<hr />
+<br />
+
+    <label>First name</label>
+    <label>@Model.FirstName</label>
+
+    <label>Last name</label>
+    <label>@Model.LastName</label>
+
+    <label>Age</label>
+    <label>@Model.Age</label>
+
+    <label>City</label>
+    <label>@Model.City</label>
+
+    <label>PhoneNumber</label>
+    <label>@Model.PhoneNumber</label>
+
+    <label>Description</label>
+    <label>@Model.Description</label>   
+
+    @{
+        if(loggedUser?.Id == Model.Id)
+        {
+            <label>Likes count</label>
+            <label>@Model.LikesCount</label>
+            //da sa samo za gledane
+
+            <a asp-controller="Home" asp-action="EditAccount">Edit Account</a>
+            <a asp-controller="Home" asp-action="Logout">Log out</a>
+        }
+        else
+        {
+            <button            >@Model.LikesCount</button>
+            //da se napravi s promqnata v bazata
+
+            //da sa changeable
+        }
+    }
+    
+<br />
+<hr />
+<br />

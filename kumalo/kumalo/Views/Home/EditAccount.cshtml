@@ -1,4 +1,9 @@
-﻿@model kumalo.Models.AccountModel;
+﻿@using kumalo.Data.Entities;
+@model kumalo.Models.AccountModel;
+
+@{
+    User? loggedUser = this.ViewData["loggedUser"] as User; //possible null
+}
 
 <h1><center>Edit Account</center></h1>
 <br />
@@ -13,7 +18,7 @@
     <input asp-for="@Model.Age" type="text" />
     <label>City</label>
     <input asp-for="@Model.City" type="text" />
-    <label>PhoneNumber</label>
+    <label>Phone Number</label>
     <input asp-for="@Model.PhoneNumber" type="text" />
     <label>Description</label>
     <input asp-for="@Model.Description" type="text" />

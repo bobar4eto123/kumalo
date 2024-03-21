@@ -36,6 +36,7 @@ namespace kumalo.Controllers
             {
                 allUsersToBeDisplayed.Add(new UserDisplayModel
                 {
+                    Id = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Age = user.Age,
@@ -84,6 +85,13 @@ namespace kumalo.Controllers
         }
 
         [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -105,54 +113,16 @@ namespace kumalo.Controllers
             return RedirectToAction("EditAccount");
         }
 
-        [HttpGet]
-        public IActionResult EditAccount()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult EditAccount(AccountModel accountModel)
-        {
-            /*
-            string userId = HttpContext.Session.GetString("UserId");
-            if (userId == null)
-            {
-               
-            }
-            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == userId);
-            ///
-            ///
-            */
-
-            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId"));
-            loggedUser.FirstName = accountModel.FirstName;
-            loggedUser.LastName = accountModel.LastName;
-            loggedUser.Age = accountModel.Age;
-            loggedUser.City = accountModel.City;
-            loggedUser.PhoneNumber = accountModel.PhoneNumber;
-            loggedUser.Description = accountModel.Description;
-
-            _context.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
 
         [HttpGet]
-        public IActionResult SeeUser(string id)
+        public IActionResult SeeAccount(string id)
         {
-            User user = _context.Users.FirstOrDefault(u => u.Id == id);
+            string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
+            this.ViewData["loggedUser"] = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
 
-            if (user == null)
-            {
-                //////
-                ///////
-                ///////
-                ///////
-                return NotFound();
-            }
+            User user = _context.Users.FirstOrDefault(u => u.Id == id); //ne moje da e null
 
-            UserDisplayModel userToReturn = new UserDisplayModel
+            UserDisplayModel accountToReturn = new UserDisplayModel
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
@@ -164,13 +134,46 @@ namespace kumalo.Controllers
                 LikesCount = user.LikesCount
             };
 
-            return View(userToReturn);
+            return View(accountToReturn);
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult EditAccount()
         {
+            string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
+            this.ViewData["loggedUser"] = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
             return View();
         }
+
+        [HttpPost]
+        public IActionResult EditAccount(AccountModel accountModel)
+        {
+            //
+            //validation na vhodnite poleta, v required attributa na AccountModel.cs, kurvo
+            //
+
+            if (!ModelState.IsValid)
+            {
+                //pomisli za drug solution
+                return View();
+            }
+
+            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId"));
+            loggedUser.FirstName = accountModel.FirstName;
+            loggedUser.LastName = accountModel.LastName;
+            loggedUser.Age = accountModel.Age;
+            loggedUser.City = accountModel.City;
+            loggedUser.PhoneNumber = accountModel.PhoneNumber;
+            loggedUser.Description = accountModel.Description;
+
+            _context.SaveChanges();
+
+            //NASIRA SESIQTA - DA SE RESOLVNE
+            //edin pop-up "Saved changes"
+
+            return RedirectToAction("Index");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
