@@ -1,3 +1,4 @@
+
 using kumalo.Data;
 using kumalo.Data.Entities;
 using kumalo.Models;
@@ -67,7 +68,7 @@ namespace kumalo.Controllers
 
             User? userTryingToLogin = _context.Users.FirstOrDefault(u => u.Username == userLoginModel.Username);
 
-            if (userTryingToLogin == null) 
+            if (userTryingToLogin == null)
             {
                 this.ModelState.AddModelError("loginError", "User does not exist.");
                 return View();
@@ -81,7 +82,7 @@ namespace kumalo.Controllers
 
             HttpContext.Session.SetString("loggedUserId", userTryingToLogin.Id);
 
-            return RedirectToAction("Index"); 
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

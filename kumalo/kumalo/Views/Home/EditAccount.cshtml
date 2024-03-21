@@ -1,4 +1,4 @@
-﻿@using kumalo.Data.Entities;
+﻿﻿@using kumalo.Data.Entities;
 @model kumalo.Models.AccountModel;
 
 @{
@@ -20,36 +20,36 @@
         <div class="wrapper">
             <form asp-controller="Home" asp-action="EditAccount" method="post">
                 <h1>Edit Account</h1>
-                    <div class="input-box">
-                        <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
+                <div class="input-box">
+                    <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
                         border: 2px solid rgba(255, 255, 255, .2); border-radius: 40px; font-size: 16px; color: #fff; padding: 20px 45px 20px 20px;"
-                        <input asp-for="@Model.FirstName" type="text" placeholder="First name" />
-                    </div>
-                    <div class="input-box">
-                        <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
+                    <input asp-for="@Model.FirstName" type="text" placeholder="First name" />
+                </div>
+                <div class="input-box">
+                    <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
                         border: 2px solid rgba(255, 255, 255, .2); border-radius: 40px; font-size: 16px; color: #fff; padding: 20px 45px 20px 20px;"
-                        <input asp-for="@Model.LastName" type="text" placeholder="Last name" />
-                    </div>
-                    <div class="input-box">
-                        <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
+                    <input asp-for="@Model.LastName" type="text" placeholder="Last name" />
+                </div>
+                <div class="input-box">
+                    <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
                         border: 2px solid rgba(255, 255, 255, .2); border-radius: 40px; font-size: 16px; color: #fff; padding: 20px 45px 20px 20px;"
-                        <input asp-for="@Model.Age" type="text" placeholder="Age" />
-                    </div>
-                    <div class="input-box">
-                        <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
+                    <input asp-for="@Model.Age" type="text" placeholder="Age" />
+                </div>
+                <div class="input-box">
+                    <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
                         border: 2px solid rgba(255, 255, 255, .2); border-radius: 40px; font-size: 16px; color: #fff; padding: 20px 45px 20px 20px;"
-                        <input asp-for="@Model.City" type="text" placeholder="City" />
-                    </div>
-                    <div class="input-box">
-                        <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
+                    <input asp-for="@Model.City" type="text" placeholder="City" />
+                </div>
+                <div class="input-box">
+                    <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
                         border: 2px solid rgba(255, 255, 255, .2); border-radius: 40px; font-size: 16px; color: #fff; padding: 20px 45px 20px 20px;"
-                        <input asp-for="@Model.PhoneNumber" type="text" placeholder="Phone Number" />
-                    </div>
-                    <div class="input-box">
-                        <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
+                    <input asp-for="@Model.PhoneNumber" type="text" placeholder="Phone Number" />
+                </div>
+                <div class="input-box">
+                    <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
                         border: 2px solid rgba(255, 255, 255, .2); border-radius: 40px; font-size: 16px; color: #fff; padding: 20px 45px 20px 20px;"
-                        <input asp-for="@Model.Description" type="text" placeholder="Description" />
-                    </div>
+                    <input asp-for="@Model.Description" type="text" placeholder="Description" />
+                </div>
 
                 <button type="submit" class="btn">Save changes</button>
             </form>
@@ -57,4 +57,3 @@
     </center>
 </body>
 </html>
-
