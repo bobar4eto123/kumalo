@@ -141,8 +141,18 @@ namespace kumalo.Controllers
         public IActionResult EditAccount()
         {
             string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
-            this.ViewData["loggedUser"] = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
-            return View();
+            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
+            AccountModel accountModel = new AccountModel
+            {
+                FirstName = loggedUser.FirstName,
+                LastName = loggedUser.LastName,
+                Age = loggedUser.Age,
+                City = loggedUser.City,
+                PhoneNumber = loggedUser.PhoneNumber,
+                Description = loggedUser.Description
+            };
+
+            return View(accountModel);
         }
 
         [HttpPost]
