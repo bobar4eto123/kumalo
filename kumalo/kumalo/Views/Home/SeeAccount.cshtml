@@ -5,48 +5,135 @@
     User? loggedUser = this.ViewData["loggedUser"] as User; //possible null
 }
 
-<h1><center>Account Info</center></h1>
-<br />
-<hr />
-<br />
-
-    <label>First name</label>
-    <label>@Model.FirstName</label>
-
-    <label>Last name</label>
-    <label>@Model.LastName</label>
-
-    <label>Age</label>
-    <label>@Model.Age</label>
-
-    <label>City</label>
-    <label>@Model.City</label>
-
-    <label>PhoneNumber</label>
-    <label>@Model.PhoneNumber</label>
-
-    <label>Description</label>
-    <label>@Model.Description</label>   
-
-    @{
-        if(loggedUser?.Id == Model.Id)
-        {
-            <label>Likes count</label>
-            <label>@Model.LikesCount</label>
-            //da sa samo za gledane
-
-            <a asp-controller="Home" asp-action="EditAccount">Edit Account</a>
-            <a asp-controller="Home" asp-action="Logout">Log out</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Info</title>
+    <style>
+        /* Green theme styles */
+        body {
+            background-color: #f0f7f4; /* Light green background */
+            color: #444; /* Dark gray text */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-        else
-        {
-            <button            >@Model.LikesCount</button>
-            //da se napravi s promqnata v bazata
 
-            //da sa changeable
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff; /* White container background */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
         }
-    }
-    
-<br />
-<hr />
-<br />
+
+        h1 {
+            color: #28a745; /* Green heading */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .info-label {
+            display: inline-block;
+            width: 120px;
+            vertical-align: top;
+        }
+
+        .info-value {
+            display: inline-block;
+            width: calc(100% - 130px);
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .edit-button, .logout-button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            background-color: #28a745; /* Green button */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+            .edit-button:hover, .logout-button:hover {
+                background-color: #218838; /* Darker green on hover */
+            }
+
+        .likes-button {
+            padding: 10px 20px;
+            background-color: #007bff; /* Blue button */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .likes-button:hover {
+                background-color: #0056b3; /* Darker blue on hover */
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Account Info</h1>
+        <div>
+            <label class="info-label">First name:</label>
+            <span class="info-value">@Model.FirstName</span><br>
+
+            <label class="info-label">Last name:</label>
+            <span class="info-value">@Model.LastName</span><br>
+
+            <label class="info-label">Age:</label>
+            <span class="info-value">@Model.Age</span><br>
+
+            <label class="info-label">City:</label>
+            <span class="info-value">@Model.City</span><br>
+
+            <label class="info-label">Phone Number:</label>
+            <span class="info-value">@Model.PhoneNumber</span><br>
+
+            <label class="info-label">Description:</label>
+            <span class="info-value">@Model.Description</span><br>
+
+            @{
+                if (loggedUser?.Id == Model.Id)
+                {
+                    <label class="info-label">Likes count:</label>
+                    <span class="info-value">@Model.LikesCount</span>
+
+                    <br>
+                //to be read-only
+
+                    <div class="action-buttons">
+                        <a class="edit-button" asp-controller="Home" asp-action="EditAccount">Edit Account</a>
+                        <a class="logout-button" asp-controller="Home" asp-action="Logout">Log out</a>
+                    </div>
+                }
+                else
+                {
+                    <form method="post" action="@Url.Action("LikeAction", "Home")">
+                        <input type="hidden" name="userId" value="@Model.Id" />
+                        <button type="submit" class="likes-button">@Model.LikesCount</button>
+                    </form>
+                    //make it changeable
+                }
+            }
+        </div>
+    </div>
+</body>
+</html>

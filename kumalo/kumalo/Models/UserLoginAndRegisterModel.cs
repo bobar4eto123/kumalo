@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 
 namespace kumalo.Models
 {
@@ -10,5 +9,7 @@ namespace kumalo.Models
 
         [Required(ErrorMessage = "Password field is required.")]
         public string Password { get; set; }
+
+        //dobavete confirm password//
     }
 }
