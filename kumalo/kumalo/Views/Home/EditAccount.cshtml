@@ -1,5 +1,5 @@
 ﻿﻿@using kumalo.Data.Entities;
-@model kumalo.Models.AccountModel;
+@model kumalo.Models.EditAccountModel;
 
 @{
     User? loggedUser = this.ViewData["loggedUser"] as User; //possible null
@@ -18,8 +18,13 @@
 <body>
     <center>
         <div class="wrapper">
-            <form asp-controller="Home" asp-action="EditAccount" method="post">
+            <form asp-controller="Home" asp-action="EditAccount" enctype="multipart/form-data" method="post">
                 <h1>Edit Account</h1>
+                <div class="input-box">
+                    <input asp-for="AccountPicture" class="custom-file-input" id="customFile" />
+                    <label class="custom-file-label" for="custom-file">Choose file</label>
+                    <span asp-validation-for="AccountPicture" class="text-danger"></span>
+                </div>
                 <div class="input-box">
                     <input style="width: 100%; height: 100%; background: transparent; border: none; outline: none;
                         border: 2px solid rgba(255, 255, 255, .2); border-radius: 40px; font-size: 16px; color: #fff; padding: 20px 45px 20px 20px;"

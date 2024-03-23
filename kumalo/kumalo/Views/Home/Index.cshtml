@@ -5,7 +5,7 @@
     User? loggedUser = this.ViewData["loggedUser"] as User; //possible null
 }
 
-@model IEnumerable<kumalo.Models.UserDisplayModel>;
+@model IEnumerable<kumalo.Models.DisplayAccountModel>;
 
 <div class="text-center">
     <h1 class="display-4">Welcome to KUMALO</h1>
@@ -36,6 +36,7 @@
                 @foreach (var user in Model)
                 {
                     <tr>
+                        <td><img src="@user.PictureUrl"/></td>
                         <td>@user.FirstName</td>
                         <td>@user.LastName</td>
                         <td>@user.City</td>

@@ -1,5 +1,5 @@
 ﻿@using kumalo.Data.Entities;
-@model kumalo.Models.UserDisplayModel;
+@model kumalo.Models.DisplayAccountModel;
 
 @{
     User? loggedUser = this.ViewData["loggedUser"] as User; //possible null
@@ -92,6 +92,8 @@
     <div class="container">
         <h1>Account Info</h1>
         <div>
+            <img src="@Model.PictureUrl" />
+
             <label class="info-label">First name:</label>
             <span class="info-value">@Model.FirstName</span><br>
 

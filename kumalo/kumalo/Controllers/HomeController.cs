@@ -12,32 +12,28 @@ namespace kumalo.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly AppDbContext _context;
-
         private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;     
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext context)
+        public HomeController(ILogger<HomeController> logger, AppDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-            //Setting session data
-            /*
-            HttpContext.Session.SetString("Username", "Gosho");
-            HttpContext.Session.SetString("LastName", "Marinov");
-            HttpContext.Session.SetInt32("Age", 22);
-            */
 
-            List<UserDisplayModel> allUsersToBeDisplayed = new List<UserDisplayModel>();
+            List<DisplayAccountModel> allAccountsToBeDisplayed = new List<DisplayAccountModel>();
 
             foreach (User user in _context.Users)
             {
-                allUsersToBeDisplayed.Add(new UserDisplayModel
+                allAccountsToBeDisplayed.Add(new DisplayAccountModel
                 {
                     Id = user.Id,
+                    PictureUrl = user.PictureUrl,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Age = user.Age,
@@ -51,7 +47,7 @@ namespace kumalo.Controllers
             string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
             this.ViewData["loggedUser"] = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
 
-            return View(allUsersToBeDisplayed);
+            return View(allAccountsToBeDisplayed);
         }
 
         [HttpGet]
@@ -123,9 +119,10 @@ namespace kumalo.Controllers
 
             User user = _context.Users.FirstOrDefault(u => u.Id == id); //ne moje da e null
 
-            UserDisplayModel accountToReturn = new UserDisplayModel
+            DisplayAccountModel accountToReturn = new DisplayAccountModel
             {
                 Id = user.Id,
+                PictureUrl = user.PictureUrl,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Age = user.Age,
@@ -144,7 +141,7 @@ namespace kumalo.Controllers
             ViewData["IsEditAccountPage"] = true;
             string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
             User loggedUser = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
-            AccountModel accountModel = new AccountModel
+            EditAccountModel editAccountModel = new EditAccountModel
             {
                 FirstName = loggedUser.FirstName,
                 LastName = loggedUser.LastName,
@@ -154,11 +151,11 @@ namespace kumalo.Controllers
                 Description = loggedUser.Description
             };
 
-            return View(accountModel);
+            return View(editAccountModel);
         }
 
         [HttpPost]
-        public IActionResult EditAccount(AccountModel accountModel)
+        public IActionResult EditAccount(EditAccountModel editAccountModel)
         {
             //
             //validation na vhodnite poleta, v required attributa na AccountModel.cs, kurvo
@@ -171,16 +168,22 @@ namespace kumalo.Controllers
             }
 
             User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId"));
-            loggedUser.FirstName = accountModel.FirstName;
-            loggedUser.LastName = accountModel.LastName;
-            loggedUser.Age = accountModel.Age;
-            loggedUser.City = accountModel.City;
-            loggedUser.PhoneNumber = accountModel.PhoneNumber;
-            loggedUser.Description = accountModel.Description;
 
+            //picture things
+            string folder = "accounts/pictures/" + Guid.NewGuid().ToString() + "_" + editAccountModel.AccountPicture.FileName;
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+            editAccountModel.AccountPicture.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+            loggedUser.PictureUrl = "/" + folder;
+            loggedUser.FirstName = editAccountModel.FirstName;
+            loggedUser.LastName = editAccountModel.LastName;
+            loggedUser.Age = editAccountModel.Age;
+            loggedUser.City = editAccountModel.City;
+            loggedUser.PhoneNumber = editAccountModel.PhoneNumber;
+            loggedUser.Description = editAccountModel.Description;
+            
             _context.SaveChanges();
 
-            //NASIRA SESIQTA - DA SE RESOLVNE
             //edin pop-up "Saved changes"
 
             return RedirectToAction("Index");

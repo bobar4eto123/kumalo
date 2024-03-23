@@ -2,10 +2,13 @@
 
 namespace kumalo.Models
 {
-    public class UserDisplayModel
+    public class DisplayAccountModel
     {
         [Required]
         public string Id { get; set; }
+
+        [Required]
+        public string PictureUrl { get; set; }
 
         [Required]
         public string FirstName { get; set; }

@@ -14,6 +14,9 @@ namespace kumalo.Data.Entities
         public string Password { get; set; }
 
         [Required]
+        public string PictureUrl {  get; set; }
+
+        [Required]
         public string FirstName {  get; set; }
 
         [Required]
