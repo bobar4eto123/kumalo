@@ -43,13 +43,6 @@
                     <span asp-validation-for="Role" class="text-danger"></span>
                 </div>
 
-
-                <select class="input-box">
-                    <option disabled selected>Choose your role in the platform</option>
-                    <option value ="Supplier">Supplier - I offer my services</option>
-                    <option value="Demander">Demander - I seek other's services</option>
-                </select>
-
                 <div class="error-message">@Html.ValidationMessage("registerError")</div>
 
                 <button type="submit" class="btn">Register</button>
