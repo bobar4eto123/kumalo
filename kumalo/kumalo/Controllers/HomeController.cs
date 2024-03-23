@@ -25,27 +25,31 @@ namespace kumalo.Controllers
 
         public IActionResult Index()
         {
+            string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
+            this.ViewData["loggedUser"] = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
 
             List<DisplayAccountModel> allAccountsToBeDisplayed = new List<DisplayAccountModel>();
 
             foreach (User user in _context.Users)
             {
-                allAccountsToBeDisplayed.Add(new DisplayAccountModel
+                if (user.Role == "Supplier")
                 {
-                    Id = user.Id,
-                    PictureUrl = user.PictureUrl,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Age = user.Age,
-                    City = user.City,
-                    PhoneNumber = user.PhoneNumber,
-                    Description = user.Description,
-                    LikesCount = user.LikesCount,
-                });
+                    allAccountsToBeDisplayed.Add(new DisplayAccountModel
+                    {
+                        Id = user.Id,
+                        PictureUrl = user.PictureUrl,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Age = user.Age,
+                        City = user.City,
+                        PhoneNumber = user.PhoneNumber,
+                        Description = user.Description,
+                        ReceivedLikesFrom = user.ReceivedLikesFrom,
+                    });
+                }
             }
 
-            string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
-            this.ViewData["loggedUser"] = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
+            allAccountsToBeDisplayed.RemoveAll(u => u.Id == loggedUserId);
 
             return View(allAccountsToBeDisplayed);
         }
@@ -57,7 +61,7 @@ namespace kumalo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(UserLoginAndRegisterModel userLoginModel)
+        public IActionResult Login(UserLoginModel userLoginModel)
         {
             if (!this.ModelState.IsValid)
                 return View();
@@ -95,7 +99,7 @@ namespace kumalo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(UserLoginAndRegisterModel userRegisterModel)
+        public IActionResult Register(UserRegisterModel userRegisterModel)
         {
             if (!this.ModelState.IsValid)
                 return View();
@@ -107,13 +111,15 @@ namespace kumalo.Controllers
                 return View(userRegisterModel);
             }
 
-            User newUser = new User(userRegisterModel.Username, userRegisterModel.Password);
+            User newUser = new User(userRegisterModel.Username, userRegisterModel.Password, userRegisterModel.Role);
             _context.Users.Add(newUser);
             _context.SaveChanges();
 
             HttpContext.Session.SetString("loggedUserId", newUser.Id);
 
+
             return RedirectToAction("EditAccount");
+
         }
 
 
@@ -135,7 +141,7 @@ namespace kumalo.Controllers
                 City = user.City,
                 PhoneNumber = user.PhoneNumber,
                 Description = user.Description,
-                LikesCount = user.LikesCount
+               // ReceivedLikesFrom = user.ReceivedLikesFrom
             };
 
             return View(accountToReturn);
@@ -155,7 +161,6 @@ namespace kumalo.Controllers
                 PhoneNumber = loggedUser.PhoneNumber,
                 Description = loggedUser.Description
             };
-            ViewData["IsEditAccountPage"] = true;
 
             return View(editAccountModel);
         }
@@ -183,7 +188,7 @@ namespace kumalo.Controllers
             
             _context.SaveChanges();
 
-            //edin pop-up "Saved changes"
+            //pop-up "Saved changes"
 
             return RedirectToAction("Index");
         }
@@ -192,7 +197,7 @@ namespace kumalo.Controllers
         public IActionResult Like(string id)
         {
             User userToIncrementLikes = _context.Users.FirstOrDefault(u => u.Id == id);
-            userToIncrementLikes.LikesCount++;
+            //userToIncrementLikes.LikesCount++;
             _context.SaveChanges();
 
             return RedirectToAction("SeeAccount", new {id = id});

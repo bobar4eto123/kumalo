@@ -55,5 +55,23 @@ namespace kumalo.Data.Entities
             this.ReceivedLikesFrom = new List<string>();
         }
 
+<<<<<<< HEAD
+=======
+        public User(string username, string password, string pictureUrl, string firstName, string lastName, string age, string city, string PhoneNumber, string description)
+        {
+            this.Username = username;
+            this.Password = password;
+            this.PictureUrl = pictureUrl;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Age = age;
+            this.City = city;
+            this.PhoneNumber = PhoneNumber;
+            this.Description = description;
+            this.LikesCount = 0;
+        }
+
+
+>>>>>>> 7e4ca6158423373abbbe614e56db8f19539c8b43
     }
 }
