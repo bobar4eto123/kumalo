@@ -155,7 +155,6 @@ namespace kumalo.Controllers
                 PhoneNumber = loggedUser.PhoneNumber,
                 Description = loggedUser.Description
             };
-            ViewData["IsEditAccountPage"] = true;
 
             return View(editAccountModel);
         }
