@@ -41,6 +41,7 @@ namespace kumalo.Data.Entities
         {
             this.Username = username;
             this.Password = password;
+            this.PictureUrl = "";
             this.FirstName = "";
             this.LastName = "";
             this.Age = 0;
@@ -50,10 +51,11 @@ namespace kumalo.Data.Entities
             this.LikesCount = 0;
         }
 
-        public User(string username, string password, string firstName, string lastName, int age, string city, string PhoneNumber, string description)
+        public User(string username, string password, string pictureUrl, string firstName, string lastName, int age, string city, string PhoneNumber, string description)
         {
             this.Username = username;
             this.Password = password;
+            this.PictureUrl = pictureUrl;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Age = age;
