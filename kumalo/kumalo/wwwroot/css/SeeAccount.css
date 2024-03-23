@@ -1,0 +1,102 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-color: #f0f7f4;
+}
+
+.container {
+
+    background: #6a8e7c;
+    backdrop-filter: blur(9px);
+    color: #fff;
+    border-radius: 12px;
+    padding: 20px 20px;
+}
+
+    .container h1 {
+        text-align: center;
+        font-size: 36px;
+    }
+
+    .container .info-container {
+        text-align: center;
+        height: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        color: #fff;
+        padding: 10px 25px 10px 10px;
+    }
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+
+}
+
+.info-label {
+    display: inline-block;
+    width: 130px;
+    vertical-align: top;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    text-align: center;
+}
+
+.info-value {
+    display: inline-block;
+    width: 130px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border: 2px solid rgba(255, 255, 255, .2);
+    background-color: #88b59a;
+    border-radius: 40px;
+    text-align: center;
+}
+
+.action-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.edit-button, .logout-button {
+    width: 50%;
+    height: 45px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    background: #fff;
+    color: #333;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+    .edit-button:hover, .logout-button:hover {
+        color: #333;
+        background-color: rgba(255, 255, 255, .6);
+    }
+
+.likes-button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue button */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    .likes-button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
