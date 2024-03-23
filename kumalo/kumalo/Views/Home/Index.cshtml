@@ -7,44 +7,48 @@
 
 @model IEnumerable<kumalo.Models.DisplayAccountModel>;
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to KUMALO</h1>
-    @if (loggedUser != null && !string.IsNullOrEmpty(loggedUser.Username))
-    {
-        <p>Welcome, @loggedUser.Username</p>
-    }
-    else
-    {
-        <p>Welcome, Guest</p>
-    }
-</div>
-<section class="all-users-section">
-    <section class="all-users-header">
-        <h1 class="title">Our Users</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="~/css/index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="text-center">
+        <h1 class="display-4">Welcome to KUMALO</h1>
+        @if (loggedUser != null && !string.IsNullOrEmpty(loggedUser.Username))
+        {
+            <p>Welcome, @loggedUser.Username</p>
+        }
+        else
+        {
+            <p>Welcome, Guest</p>
+        }
+    </div>
+    <section class="all-users-section">
+        <section class="all-users-header">
+            <h1 class="title">Our Users</h1>
+        </section>
+        <section class="users-list">
+            @foreach (var user in Model)
+            {
+                <div class="user-box">
+
+                    <div class="user-picture">
+                    </div>
+                    <div class="user-details">
+
+                        <h2>@user.FirstName @user.LastName</h2>
+                        <p>City: @user.City</p>
+                        <p>Age: @user.Age</p>
+                        <p>Description:@user.Description</p>
+                        <a asp-controller="Home" asp-action="SeeAccount" method=get asp-route-id="@user.Id">See more</a>
+                    </div>
+                </div>
+            }
+        </section>
     </section>
-    <section class="users-list">
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in Model)
-                {
-                    <tr>
-                        <td><img src="@user.PictureUrl"/></td>
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
-                        <td>@user.City</td>
-                        <td>@user.Description</td>
-                        <td><a asp-controller="Home" asp-action="SeeAccount" method=get asp-route-id=@user.Id>See more</a></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </section>
-</section>
+</body>
+</html>
