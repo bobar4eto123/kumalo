@@ -41,12 +41,18 @@
             <label class="description-label">Description:</label>
             <span class="description-value">@Model.Description</span>
         </div>
-            @{
-                if (loggedUser?.Id == Model.Id)
+
+        @{
+            if (loggedUser != null)
+            {
+                if (loggedUser.Id == Model.Id)
                 {
-                    <label class="info-label">Likes count:</label>
-                    <span class="info-value">@Model.LikesCount</span>
-                    <br>
+                    if (loggedUser.Role == "Supplier")
+                    {
+                        <label class="info-label">Likes count:</label>
+                        <span class="info-value">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</span>
+                        <br>
+                    }
 
                     <div class="action-buttons">
                         <a class="edit-button" asp-controller="Home" asp-action="EditAccount">Edit Account</a>
@@ -56,12 +62,19 @@
                 else
                 {
                     <form method="post">
-                        <button type="submit" class="likes-button" asp-controller="Home" asp-action="Like" asp-route-id="@Model.Id">@Model.LikesCount</button>
+                        <button type="submit" class="likes-button" asp-controller="Home" asp-action="Like" asp-route-id="@Model.Id">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</button>
                     </form>
-                    
                 }
             }
-        </div>
+            else
+            {
+                <label class="info-label">Likes count:</label>
+                <span class="info-value">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</span>
+                <br>
+            }
+               
+        }
+    </div>
     </div>
 </body>
 </html>

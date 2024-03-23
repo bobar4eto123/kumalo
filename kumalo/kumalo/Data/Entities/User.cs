@@ -8,6 +8,9 @@ namespace kumalo.Data.Entities
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
         [Required]
+        public string Role { get; set; }
+
+        [Required]
         public string Username { get; set; }
 
         [Required]
@@ -32,13 +35,14 @@ namespace kumalo.Data.Entities
         public string PhoneNumber { get; set; }
 
         [Required]
-        public string Description {  get; set; }
+        public string Description { get; set; }
 
         [Required]
-        public int LikesCount { get; set; }
+        public List<string> ReceivedLikesFrom { get; set; }
 
-        public User(string username, string password)
+        public User(string username, string password, string role)
         {
+            this.Role = role;
             this.Username = username;
             this.Password = password;
             this.PictureUrl = "";
@@ -48,23 +52,8 @@ namespace kumalo.Data.Entities
             this.City = "";
             this.PhoneNumber = "";
             this.Description = "";
-            this.LikesCount = 0;
+            this.ReceivedLikesFrom = new List<string>();
         }
-
-        public User(string username, string password, string pictureUrl, string firstName, string lastName, int age, string city, string PhoneNumber, string description)
-        {
-            this.Username = username;
-            this.Password = password;
-            this.PictureUrl = pictureUrl;
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.Age = age;
-            this.City = city;
-            this.PhoneNumber = PhoneNumber;
-            this.Description = description;
-            this.LikesCount = 0;
-        }
-
 
     }
 }

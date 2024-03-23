@@ -1,4 +1,4 @@
-﻿@model kumalo.Models.UserLoginAndRegisterModel;
+﻿@model kumalo.Models.UserRegisterModel;
 
 @{
     ViewData["Title"] = "Register";
@@ -29,10 +29,20 @@
                 </div>
 
                 <div class="input-box">
-                    <input  type="password" placeholder="Confirm Password" />
+                    <input type="password" placeholder="Confirm Password" />
                     <i class='bx bxs-lock-alt'></i>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
+
+                <div>
+                    <select class="input-box" asp-for="@Model.Role">
+                        <option value=null disabled selected>Choose your role in the platform</option>
+                        <option value="Supplier">Supplier - I offer my services</option>
+                        <option value="Demander">Demander - I seek other's services</option>
+                    </select>
+                    <span asp-validation-for="Role" class="text-danger"></span>
+                </div>
+
 
                 <div class="error-message">@Html.ValidationMessage("registerError")</div>
 

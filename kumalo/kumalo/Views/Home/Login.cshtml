@@ -1,5 +1,5 @@
 ﻿
-@model kumalo.Models.UserLoginAndRegisterModel;
+@model kumalo.Models.UserLoginModel;
 
 @{
     ViewData["Title"] = "Login";
@@ -31,10 +31,6 @@
                     </div>
 
                     <div class="error-message">@Html.ValidationMessage("loginError")</div>
-
-                    @* <div class="remember-box">
-                        <label><input type="checkbox">Remember me</label>
-                    </div> *@
 
                     <button type="submit" class="btn">Login</button>
 
