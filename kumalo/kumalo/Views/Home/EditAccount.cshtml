@@ -14,7 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="~/css/style_log_reg_edit.css" rel="stylesheet" />
+    <link href="~/css/EditAccount.css" rel="stylesheet" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
@@ -22,32 +22,41 @@
         <div class="wrapper">
             <form asp-controller="Home" asp-action="EditAccount" enctype="multipart/form-data" method="post">
                 <h1>Edit Account</h1>
+                <hr />
                 <div class="input-box">
-                    <input asp-for="AccountPicture" class="custom-file-input" id="customFile" />
-                    <label class="custom-file-label" for="custom-file">Choose file</label>
+                    <label for="customFile" class="custom-file-upload">
+                        <input asp-for="AccountPicture" class="custom-file-input" id="customFile" type="file" />
+                        Upload Image
+                    </label>
                     <span asp-validation-for="AccountPicture" class="text-danger"></span>
                 </div>
                 <div class="input-box">
+                    <label class="info-label">First name:</label>
                     <input asp-for="@Model.FirstName" type="text" placeholder="First name" />
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div class="input-box">
+                    <label class="info-label">Last name:</label>
                     <input asp-for="@Model.LastName" type="text" placeholder="Last name" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
                 <div class="input-box">
+                    <label class="info-label">Age:</label>
                     <input asp-for="@Model.Age" type="text" placeholder="Age" />
                     <span asp-validation-for="Age" class="text-danger"></span>
                 </div>
                 <div class="input-box">
+                    <label class="info-label">City:</label>
                     <input asp-for="@Model.City" type="text" placeholder="City" />
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
                 <div class="input-box">
+                    <label class="info-label">Phone Number:</label>
                     <input asp-for="@Model.PhoneNumber" type="text" placeholder="Phone Number" />
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
                 <div class="input-box">
+                    <label class="info-label">Description:</label>
                     <input asp-for="@Model.Description" type="text" placeholder="Description" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
