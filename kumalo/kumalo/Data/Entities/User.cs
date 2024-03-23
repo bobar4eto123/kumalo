@@ -23,7 +23,7 @@ namespace kumalo.Data.Entities
         public string LastName { get; set; }
 
         [Required]
-        public int Age { get; set; }
+        public string Age { get; set; }
 
         [Required]
         public string City { get; set; }
@@ -44,14 +44,14 @@ namespace kumalo.Data.Entities
             this.PictureUrl = "";
             this.FirstName = "";
             this.LastName = "";
-            this.Age = 0;
+            this.Age = "";
             this.City = "";
             this.PhoneNumber = "";
             this.Description = "";
             this.LikesCount = 0;
         }
 
-        public User(string username, string password, string pictureUrl, string firstName, string lastName, int age, string city, string PhoneNumber, string description)
+        public User(string username, string password, string pictureUrl, string firstName, string lastName, string age, string city, string PhoneNumber, string description)
         {
             this.Username = username;
             this.Password = password;

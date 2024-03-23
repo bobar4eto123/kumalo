@@ -17,7 +17,7 @@ namespace kumalo.Models
         public string LastName { get; set; }
 
         [Required]
-        public int Age { get; set; }
+        public string Age { get; set; }
 
         [Required]
         public string City { get; set; }

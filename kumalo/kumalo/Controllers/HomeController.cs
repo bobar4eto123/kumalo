@@ -144,7 +144,6 @@ namespace kumalo.Controllers
         [HttpGet]
         public IActionResult EditAccount()
         {
-            ViewData["IsEditAccountPage"] = true;
             string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
             User loggedUser = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
             EditAccountModel editAccountModel = new EditAccountModel
@@ -156,6 +155,7 @@ namespace kumalo.Controllers
                 PhoneNumber = loggedUser.PhoneNumber,
                 Description = loggedUser.Description
             };
+            ViewData["IsEditAccountPage"] = true;
 
             return View(editAccountModel);
         }
