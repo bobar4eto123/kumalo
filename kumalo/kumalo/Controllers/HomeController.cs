@@ -97,9 +97,15 @@ namespace kumalo.Controllers
         [HttpPost]
         public IActionResult Register(UserLoginAndRegisterModel userRegisterModel)
         {
-            //validation
-            //
-            //
+            if (!this.ModelState.IsValid)
+                return View();
+
+            User validationUser = _context.Users.FirstOrDefault(u => u.Username == userRegisterModel.Username);
+            if (validationUser != null)
+            {
+                this.ModelState.AddModelError("registerError", "User with this username already exists.");
+                return View(userRegisterModel);
+            }
 
             User newUser = new User(userRegisterModel.Username, userRegisterModel.Password);
             _context.Users.Add(newUser);
@@ -157,15 +163,8 @@ namespace kumalo.Controllers
         [HttpPost]
         public IActionResult EditAccount(EditAccountModel editAccountModel)
         {
-            //
-            //validation na vhodnite poleta, v required attributa na AccountModel.cs, kurvo
-            //
-
-            if (!ModelState.IsValid)
-            {
-                //pomisli za drug solution
+            if (!this.ModelState.IsValid)
                 return View();
-            }
 
             User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId"));
 
@@ -189,6 +188,15 @@ namespace kumalo.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public IActionResult Like(string id)
+        {
+            User userToIncrementLikes = _context.Users.FirstOrDefault(u => u.Id == id);
+            userToIncrementLikes.LikesCount++;
+            _context.SaveChanges();
+
+            return RedirectToAction("SeeAccount", new {id = id});
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

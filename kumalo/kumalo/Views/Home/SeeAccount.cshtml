@@ -117,9 +117,7 @@
                 {
                     <label class="info-label">Likes count:</label>
                     <span class="info-value">@Model.LikesCount</span>
-
                     <br>
-                //to be read-only
 
                     <div class="action-buttons">
                         <a class="edit-button" asp-controller="Home" asp-action="EditAccount">Edit Account</a>
@@ -128,11 +126,10 @@
                 }
                 else
                 {
-                    <form method="post" action="@Url.Action("LikeAction", "Home")">
-                        <input type="hidden" name="userId" value="@Model.Id" />
-                        <button type="submit" class="likes-button">@Model.LikesCount</button>
+                    <form method="post">
+                        <button type="submit" class="likes-button" asp-controller="Home" asp-action="Like" asp-route-id="@Model.Id">@Model.LikesCount</button>
                     </form>
-                    //make it changeable
+                    
                 }
             }
         </div>
