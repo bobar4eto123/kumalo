@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿﻿* {
+=======
+﻿* {
+>>>>>>> 043996af825e7ef435c389bca0727df222c4cd33
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,7 +14,11 @@ body {
     align-items: center;
     background-size: cover;
     background-position: center;
+<<<<<<< HEAD
     background-color: #ffffff;
+=======
+    background-color: #f0f7f4;
+>>>>>>> 043996af825e7ef435c389bca0727df222c4cd33
 }
 
 .wrapper {
@@ -77,7 +85,10 @@ body {
     color: #333;
     font-weight: 600;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 043996af825e7ef435c389bca0727df222c4cd33
     .wrapper .btn:hover {
         background-color: rgba(255, 255, 255, .6);
     }
@@ -96,4 +107,8 @@ body {
 
     .register-link:hover {
         text-decoration: underline;
+<<<<<<< HEAD
     }
+=======
+    }
+>>>>>>> 043996af825e7ef435c389bca0727df222c4cd33
