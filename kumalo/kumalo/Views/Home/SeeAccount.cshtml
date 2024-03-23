@@ -13,10 +13,10 @@
     <link href="~/css/SeeAccount.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
+    <div class="container main-container">
         <h1>Account Info</h1>
         <hr />
-        <img src="@Model.PictureUrl" />
+            <img class="image-container" src="@Model.PictureUrl" />
         <div class="info-container">
             <label class="info-label">First name:</label>
             <span class="info-value">@Model.FirstName</span>
@@ -38,30 +38,43 @@
             <span class="info-value">@Model.PhoneNumber</span>
         </div>
         <div class="description-container">
-            <label class="description-label">Description:</label>
+            <label class="info-label">Description:</label>
             <span class="description-value">@Model.Description</span>
         </div>
-            @{
-                if (loggedUser?.Id == Model.Id)
+
+        @{
+            if (loggedUser != null)
+            {
+                if (loggedUser.Id == Model.Id)
                 {
-                    <label class="info-label">Likes count:</label>
-                    <span class="info-value">@Model.LikesCount</span>
-                    <br>
+                    if (loggedUser.Role == "Supplier")
+                    {
+                        <label class="info-label">Likes count:</label>
+                        <span class="info-value">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</span>
+                        <br>
+                    }
 
                     <div class="action-buttons">
-                        <a class="edit-button" asp-controller="Home" asp-action="EditAccount">Edit Account</a>
-                        <a class="logout-button" asp-controller="Home" asp-action="Logout">Log out</a>
+                        <a class="edit-button text-decoration-none" asp-controller="Home" asp-action="EditAccount">Edit Account</a>
+                        <a class="logout-button text-decoration-none" asp-controller="Home" asp-action="Logout">Log out</a>
                     </div>
                 }
                 else
                 {
                     <form method="post">
-                        <button type="submit" class="likes-button" asp-controller="Home" asp-action="Like" asp-route-id="@Model.Id">@Model.LikesCount</button>
+                        <button type="submit" class="likes-button" asp-controller="Home" asp-action="Like" asp-route-id="@Model.Id">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</button>
                     </form>
-                    
                 }
             }
-        </div>
+            else
+            {
+                <label class="info-label">Likes count:</label>
+                <span class="info-value">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</span>
+                <br>
+            }
+               
+        }
+   
     </div>
 </body>
 </html>

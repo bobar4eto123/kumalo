@@ -8,6 +8,9 @@ namespace kumalo.Models
         public string Id { get; set; }
 
         [Required]
+        public string Role { get; set; }
+
+        [Required]
         public string PictureUrl { get; set; }
 
         [Required]
@@ -17,7 +20,7 @@ namespace kumalo.Models
         public string LastName { get; set; }
 
         [Required]
-        public int Age { get; set; }
+        public string Age { get; set; }
 
         [Required]
         public string City { get; set; }
@@ -29,6 +32,6 @@ namespace kumalo.Models
         public string Description { get; set; }
 
         [Required]
-        public int LikesCount { get; set; }
+        public List<string> ReceivedLikesFrom { get; set; }
     }
 }
