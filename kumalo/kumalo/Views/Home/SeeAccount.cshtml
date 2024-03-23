@@ -62,7 +62,7 @@
                 else
                 {
                     <form method="post">
-                        <button type="submit" class="likes-button" asp-controller="Home" asp-action="Like" asp-route-id="@Model.Id">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</button>
+                        <button type="submit" class="likes-button" asp-controller="Home" asp-action="LikeOrDislike" asp-route-id="@Model.Id">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</button>
                     </form>
                 }
             }
