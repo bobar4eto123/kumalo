@@ -15,7 +15,7 @@ namespace kumalo.Models
 
         [Required(ErrorMessage = "Age field is required.")]
         [Range(1, 150, ErrorMessage = "Please enter a valid age between 1 and 150.")]
-        public int Age { get; set; }
+        public string Age { get; set; }
 
         [Required(ErrorMessage = "City name field is required.")]
         public string City { get; set; }
