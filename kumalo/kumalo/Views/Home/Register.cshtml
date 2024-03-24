@@ -43,8 +43,8 @@
                     <span id="message" class="text-danger"></span>
                 </div>
 
-                <div>
-                    <select class="input-box" asp-for="@Model.Role">
+                <div class="input-box-dropdown">
+                    <select class="custom-select" asp-for="@Model.Role">
                         <option value=null disabled selected>Choose your role in the platform</option>
                         <option value="Supplier">Supplier - I offer my services</option>
                         <option value="Demander">Demander - I seek other's services</option>
