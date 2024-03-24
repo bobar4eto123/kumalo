@@ -78,7 +78,7 @@ label {
     margin-top: 20px;
 }
 
-.edit-button, .logout-button {
+.edit-button, .logout-button, .deleteAccount-button {
     width: 50%;
     height: 45px;
     padding: 10px 20px;
@@ -94,7 +94,7 @@ label {
     text-decoration: none;
 }
 
-    .edit-button:hover, .logout-button:hover {
+    .edit-button:hover, .logout-button:hover, .deleteAccount-button:hover {
         color: #333;
         background-color: rgba(255, 255, 255, .6);
     }

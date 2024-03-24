@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using kumalo.Data.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace kumalo.Models
 {
@@ -33,5 +34,19 @@ namespace kumalo.Models
 
         [Required]
         public List<string> ReceivedLikesFrom { get; set; }
+
+        public DisplayAccountModel(User userToBeConverted)
+        {
+            this.Id = userToBeConverted.Id;
+            this.Role = userToBeConverted.Role;
+            this.PictureUrl = userToBeConverted.PictureUrl;
+            this.FirstName = userToBeConverted.FirstName;
+            this.LastName = userToBeConverted.LastName;
+            this.Age = userToBeConverted.Age;
+            this.City = userToBeConverted.City;
+            this.PhoneNumber = userToBeConverted.PhoneNumber;
+            this.Description = userToBeConverted.Description;
+            this.ReceivedLikesFrom = userToBeConverted.ReceivedLikesFrom;
+        }
     }
 }
