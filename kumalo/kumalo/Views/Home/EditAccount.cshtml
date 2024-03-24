@@ -3,10 +3,10 @@
 
 @{
     User? loggedUser = this.ViewData["loggedUser"] as User; //possible null
-}
-@{
+
     ViewData["Title"] = "Edit Account";
     ViewData["IsEditAccountPage"] = true;
+
 }
 
 <!DOCTYPE html>
@@ -24,8 +24,8 @@
                 <h1>Edit Account</h1>
                 <hr />
                 <div class="input-image">
-                    <label for="customFile" class="custom-file-upload">
-                        <input asp-for="AccountPicture" class="custom-file-input" id="customFile" type="file" />
+                    <label for="customFile" class="custom-file-upload" >
+                        <input asp-for="@Model.AccountPicture" class="custom-file-input" id="customFile" type="file" />
                         Upload Image
                     </label>
                     <span asp-validation-for="AccountPicture" class="text-danger"></span>

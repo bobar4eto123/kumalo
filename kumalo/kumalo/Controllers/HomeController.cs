@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.IO;
 
 namespace kumalo.Controllers
 {
@@ -66,7 +69,7 @@ namespace kumalo.Controllers
                 this.ModelState.AddModelError("loginError", "User does not exist.");
                 return View();
             }
-            if (userTryingToLogin.Password != userLoginModel.Password)
+            if (userTryingToLogin.Password != Hash(userLoginModel.Password, userTryingToLogin.PasswordSalt))
             {
                 userLoginModel.Password = string.Empty;
                 this.ModelState.AddModelError("loginError", "Incorrect password.");
@@ -114,9 +117,12 @@ namespace kumalo.Controllers
 
             //--------------------//
 
+            //Creating new salt
+            string salt = CreateSalt(32);
 
             //If validation is passed, adding a new user to the DB
-            User newUser = new User(userRegisterModel.Username, userRegisterModel.Password, userRegisterModel.Role);
+            User newUser = new User(userRegisterModel.Username, Hash(userRegisterModel.Password, salt), userRegisterModel.Role);
+            newUser.PasswordSalt = salt;
             _context.Users.Add(newUser);
             _context.SaveChanges();
 
@@ -130,9 +136,11 @@ namespace kumalo.Controllers
         [HttpGet]
         public IActionResult EditAccount()
         {
+
             //Getting the logged user from the session, in order to pass its info as placeholders in the textboxes
             string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
             User loggedUser = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
+
 
             //Converting it into an EditAccountModel
             EditAccountModel editAccountModel = new EditAccountModel
@@ -231,6 +239,7 @@ namespace kumalo.Controllers
             User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId")); //The app architecture does not allow it to be null so User? is not necessary
 
             _context.Users.Remove(loggedUser);
+            _context.SaveChanges();
 
             //Cleaning the session means no longer having a logged user
             HttpContext.Session.Clear();
@@ -238,5 +247,20 @@ namespace kumalo.Controllers
             return RedirectToAction("Index");
         }
 
+
+        private static string CreateSalt(int size)
+        {
+            var sp = new RNGCryptoServiceProvider();
+            var buffer = new byte[size];
+            sp.GetBytes(buffer);
+            return Convert.ToBase64String(buffer);
+        }
+
+        private static string Hash(string input, string salt)
+        {
+            var bytes = Encoding.UTF8.GetBytes(input + salt);
+            var sha256String = new SHA1Managed();
+            return Convert.ToBase64String(sha256String.ComputeHash(bytes));
+        }
     }
 }
