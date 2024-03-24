@@ -39,13 +39,8 @@ namespace kumaloWebAppTests.ControllerTest
                 Description = "Banica"
             };
 
-            // Create a fake DbContextOptions<AppDbContext>
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: "TestDatabase")
-                .Options;
-
-            // Pass the options to the constructor when creating the fake AppDbContext
-            var fakeContext = A.Fake<AppDbContext>(x => x.WithArgumentsForConstructor(() => new AppDbContext(options)));
+            var fakeContext = A.Fake<AppDbContext>();
+            var fakeDbSet = A.Fake<DbSet<User>>();
 
             A.CallTo(() => fakeContext.Users.FirstOrDefault(u => u.Id == loggedUserId)).Returns(loggedUser);
 
