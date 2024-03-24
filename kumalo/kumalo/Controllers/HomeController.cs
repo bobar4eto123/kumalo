@@ -25,11 +25,12 @@ namespace kumalo.Controllers
 
         public IActionResult Index()
         {
+            //Getting the logged user from the session and passing it to the Index view (needed for the "Welcome, ...")
             string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
             this.ViewData["loggedUser"] = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
 
+            //Reading from the DB
             List<DisplayAccountModel> allAccountsToBeDisplayed = new List<DisplayAccountModel>();
-
             foreach (User user in _context.Users)
             {
                 if (user.Role == "Supplier")
@@ -49,8 +50,9 @@ namespace kumalo.Controllers
                 }
             }
 
-            allAccountsToBeDisplayed.RemoveAll(u => u.Id == loggedUserId);
+            allAccountsToBeDisplayed.RemoveAll(u => u.Id == loggedUserId); //As a logged user, I do not want to see myself in the list with suppliers
 
+            //Passing the list with models to the Index view
             return View(allAccountsToBeDisplayed);
         }
 
@@ -63,6 +65,8 @@ namespace kumalo.Controllers
         [HttpPost]
         public IActionResult Login(UserLoginModel userLoginModel)
         {
+            //-----VALIDATION-----//
+            
             if (!this.ModelState.IsValid)
                 return View();
 
@@ -80,6 +84,10 @@ namespace kumalo.Controllers
                 return View(userLoginModel);
             }
 
+            //--------------------//
+            
+
+            //If validation is passed, setting the logged user for the session with its Id
             HttpContext.Session.SetString("loggedUserId", userTryingToLogin.Id);
 
             return RedirectToAction("Index");
@@ -88,7 +96,9 @@ namespace kumalo.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
+            //Cleaning the session means no longer having a logged user
             HttpContext.Session.Clear();
+
             return RedirectToAction("Index");
         }
 
@@ -101,6 +111,8 @@ namespace kumalo.Controllers
         [HttpPost]
         public IActionResult Register(UserRegisterModel userRegisterModel)
         {
+            //-----VALIDATION-----//
+
             if (!this.ModelState.IsValid)
                 return View();
 
@@ -111,47 +123,29 @@ namespace kumalo.Controllers
                 return View(userRegisterModel);
             }
 
+            //--------------------//
+
+
+            //If validation is passed, adding a new user to the DB
             User newUser = new User(userRegisterModel.Username, userRegisterModel.Password, userRegisterModel.Role);
             _context.Users.Add(newUser);
             _context.SaveChanges();
 
+            //Setting the logged user for the session with its Id
             HttpContext.Session.SetString("loggedUserId", newUser.Id);
 
-
+            //Immediately redirecting to the EditAccount, because a new user has to configure account info
             return RedirectToAction("EditAccount");
-
-        }
-
-
-        [HttpGet]
-        public IActionResult SeeAccount(string id)
-        {
-            string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
-            this.ViewData["loggedUser"] = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
-
-            User user = _context.Users.FirstOrDefault(u => u.Id == id); //ne moje da e null
-
-            DisplayAccountModel accountToReturn = new DisplayAccountModel
-            {
-                Id = user.Id,
-                PictureUrl = user.PictureUrl,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Age = user.Age,
-                City = user.City,
-                PhoneNumber = user.PhoneNumber,
-                Description = user.Description,
-               // ReceivedLikesFrom = user.ReceivedLikesFrom
-            };
-
-            return View(accountToReturn);
         }
 
         [HttpGet]
         public IActionResult EditAccount()
         {
+            //Getting the logged user from the session, in order to pass its info as placeholders in the textboxes
             string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
             User loggedUser = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
+
+            //Converting it into an EditAccountModel
             EditAccountModel editAccountModel = new EditAccountModel
             {
                 FirstName = loggedUser.FirstName,
@@ -168,16 +162,22 @@ namespace kumalo.Controllers
         [HttpPost]
         public IActionResult EditAccount(EditAccountModel editAccountModel)
         {
+            //-----VALIDATION-----// (for the required fields)
+
             if (!this.ModelState.IsValid)
                 return View();
 
-            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId"));
+            //--------------------//
 
-            //picture things
+            //Getting the logged user from the DB (it is the user to be modified)
+            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId")); //The app architecture does not
+                                                                                                        //allow it to be null so User? is not necessary
+            //Saving Account Picture in the folder
             string folder = "accounts/pictures/" + Guid.NewGuid().ToString() + "_" + editAccountModel.AccountPicture.FileName;
             string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
             editAccountModel.AccountPicture.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
 
+            //Saving the given info
             loggedUser.PictureUrl = "/" + folder;
             loggedUser.FirstName = editAccountModel.FirstName;
             loggedUser.LastName = editAccountModel.LastName;
@@ -188,33 +188,61 @@ namespace kumalo.Controllers
             
             _context.SaveChanges();
 
-            //pop-up "Saved changes"
-
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult SeeAccount(string id)
+        {
+            //Getting the logged user from the sessionand passing it to the SeeAccount view (needed for the checks if a user wants to see their 
+            //own account or other - there are differences with the LikeOrDislike functionality)
+            string? loggedUserId = HttpContext.Session.GetString("loggedUserId");
+            this.ViewData["loggedUser"] = _context.Users.FirstOrDefault(u => u.Id == loggedUserId);
+
+            //Getting the user which has to be displayed from the DB
+            User user = _context.Users.FirstOrDefault(u => u.Id == id); //The app architecture does not allow it to be null so User? is not necessary
+
+            //Converting to a DisplayAccountModel
+            DisplayAccountModel accountToDisplay = new DisplayAccountModel
+            {
+                Id = user.Id,
+                PictureUrl = user.PictureUrl,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Age = user.Age,
+                City = user.City,
+                PhoneNumber = user.PhoneNumber,
+                Description = user.Description,
+                ReceivedLikesFrom = user.ReceivedLikesFrom
+            };
+
+            //Passing the account which has to be displayed to the View
+            return View(accountToDisplay);
         }
 
         [HttpPost]
         public IActionResult LikeOrDislike(string id)
         {
-            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId")); //cannot be null
+            //Getting the logged user from the session
+            string loggedUserId = HttpContext.Session.GetString("loggedUserId"); //The app architecture does not allow it to be null so User? is not necessary
+            
+            //Getting the user whose likes will be modified
+            User likedUser = _context.Users.FirstOrDefault(u => u.Id == id); //The app architecture does not allow it to be null so User? is not necessary
 
-            User likedUser = _context.Users.FirstOrDefault(u => u.Id == id); //cannot be null
-
-            List<string> likesToBeModified = likedUser.ReceivedLikesFrom;
-
-            if (likesToBeModified.Contains(loggedUser.Id))
+            //Modifying the likes
+            List <string> likesToBeModified = likedUser.ReceivedLikesFrom;
+            if (likesToBeModified.Contains(loggedUserId))
             {
-                likesToBeModified.Remove(loggedUser.Id);
+                likesToBeModified.Remove(loggedUserId);
             }
             else
             {
-                likesToBeModified.Add(loggedUser.Id);
+                likesToBeModified.Add(loggedUserId);
             }
-
-            //likedUser.ReceivedLikesFrom = likesToBeModified;
 
             _context.SaveChanges();
 
+            //Refreshing the page to see the new likes count
             return RedirectToAction("SeeAccount", new {id = id});
         }
 
