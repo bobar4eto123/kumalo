@@ -22,47 +22,6 @@ namespace kumaloWebAppTests.ControllerTest
 
     public class HomeControllerTest
     {
-        /*
-        [Fact]
-        public void EditAccount_ReturnsViewResultWithEditAccountModel()
-        {
-            // Arrange
-            var loggedUserId = "loggedUserId";
-            var loggedUser = new User("Test", "Test", "Supplier")
-            {
-                Id = loggedUserId,
-                FirstName = "John",
-                LastName = "Doe",
-                Age = "32",
-                City = "New York",
-                PhoneNumber = "123456789",
-                Description = "Banica"
-            };
-
-            var fakeContext = A.Fake<AppDbContext>();
-            var fakeDbSet = A.Fake<DbSet<User>>();
-
-            A.CallTo(() => fakeContext.Users.FirstOrDefault(u => u.Id == loggedUserId)).Returns(loggedUser);
-
-            var controller = new HomeController(null, fakeContext, null);
-            var expectedModel = new EditAccountModel
-            {
-                FirstName = loggedUser.FirstName,
-                LastName = loggedUser.LastName,
-                Age = loggedUser.Age,
-                City = loggedUser.City,
-                PhoneNumber = loggedUser.PhoneNumber,
-                Description = loggedUser.Description
-            };
-
-            // Act
-            var result = controller.EditAccount();
-
-            // Assert
-            result.Should().BeOfType<ViewResult>()
-                .Which.Model.Should().BeEquivalentTo(expectedModel);
-        }
-        */
         [Fact]
         public void Login_ReturnsViewResult()
         {
