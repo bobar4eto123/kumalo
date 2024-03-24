@@ -99,3 +99,35 @@ body {
         text-decoration: underline;
 
     }
+
+.input-box-dropdown {
+    margin-bottom: 40px;
+}
+
+.custom-select {
+    color: #fff;
+    background: #88b59a;
+    border: 2px solid rgba(255, 255, 255, .2);
+    width: 100%;
+    height: 100%;
+    padding: 8px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjust font size as needed */
+    border-radius: 40px;
+}
+
+    .custom-select:focus {
+        border: 2px solid rgba(255, 255, 255, .6);
+    }
+
+.text-danger {
+    color: red;
+}
+
+.error-message {
+    position: relative;
+    color:  red;
+    font-weight: 400;
+}
+    .error-message:active {
+        margin-top: 0;
+    }
