@@ -35,18 +35,7 @@ namespace kumalo.Controllers
             {
                 if (user.Role == "Supplier")
                 {
-                    allAccountsToBeDisplayed.Add(new DisplayAccountModel
-                    {
-                        Id = user.Id,
-                        PictureUrl = user.PictureUrl,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Age = user.Age,
-                        City = user.City,
-                        PhoneNumber = user.PhoneNumber,
-                        Description = user.Description,
-                        ReceivedLikesFrom = user.ReceivedLikesFrom,
-                    });
+                    allAccountsToBeDisplayed.Add(new DisplayAccountModel(user));
                 }
             }
 
@@ -203,18 +192,7 @@ namespace kumalo.Controllers
             User user = _context.Users.FirstOrDefault(u => u.Id == id); //The app architecture does not allow it to be null so User? is not necessary
 
             //Converting to a DisplayAccountModel
-            DisplayAccountModel accountToDisplay = new DisplayAccountModel
-            {
-                Id = user.Id,
-                PictureUrl = user.PictureUrl,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Age = user.Age,
-                City = user.City,
-                PhoneNumber = user.PhoneNumber,
-                Description = user.Description,
-                ReceivedLikesFrom = user.ReceivedLikesFrom
-            };
+            DisplayAccountModel accountToDisplay = new DisplayAccountModel(user);
 
             //Passing the account which has to be displayed to the View
             return View(accountToDisplay);
