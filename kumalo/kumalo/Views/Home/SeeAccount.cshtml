@@ -16,7 +16,7 @@
     <div class="container main-container">
         <h1>Account Info</h1>
         <hr />
-            <img class="image-container" src="@Model.PictureUrl" />
+        <img class="image-container" src="@Model.PictureUrl" />
         <div class="info-container">
             <label class="info-label">First name:</label>
             <span class="info-value">@Model.FirstName</span>
@@ -39,7 +39,8 @@
         </div>
         <div class="description-container">
             <label class="info-label">Description:</label>
-            <span class="description-value">@Model.Description</span>
+            <br/>
+            <span class="description-value">@Model.Description</span>          
         </div>
 
         @{
@@ -49,9 +50,9 @@
                 {
                     if (loggedUser.Role == "Supplier")
                     {
-                        <label class="info-label">Likes count:</label>
-                        <span class="info-value">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</span>
-                        <br>
+                        <button type="submit" class="fake-likes-button" id="likeButton">
+                            <span class="like-counter" id="likeCount">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</span>
+                        </button>
                     }
 
                     <div class="action-buttons">
@@ -63,15 +64,17 @@
                 else
                 {
                     <form method="post">
-                        <button type="submit" class="likes-button" asp-controller="Home" asp-action="LikeOrDislike" asp-route-id="@Model.Id">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</button>
+                        <button type="submit" class="likes-button" asp-controller="Home" asp-action="LikeOrDislike" asp-route-id="@Model.Id">
+                            <span class="like-counter" id="likeCount">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</span>
+                        </button>
                     </form>
                 }
             }
             else
             {
-                <label class="info-label">Likes count:</label>
-                <span class="info-value">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</span>
-                <br>
+                <button type="submit" class="fake-likes-button" id="likeButton">
+                    <span class="like-counter" id="likeCount">@(Model.ReceivedLikesFrom == null ? 0 : Model.ReceivedLikesFrom.Count)</span>
+                </button>
             }
                
         }
