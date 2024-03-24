@@ -224,5 +224,19 @@ namespace kumalo.Controllers
             return RedirectToAction("SeeAccount", new {id = id});
         }
 
+        [HttpPost]
+        public IActionResult DeleteAccount()
+        {
+            //Getting the logged user from the DB (it will be deleted)
+            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId")); //The app architecture does not allow it to be null so User? is not necessary
+
+            _context.Users.Remove(loggedUser);
+
+            //Cleaning the session means no longer having a logged user
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
