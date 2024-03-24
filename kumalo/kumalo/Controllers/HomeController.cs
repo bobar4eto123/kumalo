@@ -194,19 +194,29 @@ namespace kumalo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Like(string id)
+        public IActionResult LikeOrDislike(string id)
         {
-            User userToIncrementLikes = _context.Users.FirstOrDefault(u => u.Id == id);
-            //userToIncrementLikes.LikesCount++;
+            User loggedUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetString("loggedUserId")); //cannot be null
+
+            User likedUser = _context.Users.FirstOrDefault(u => u.Id == id); //cannot be null
+
+            List<string> likesToBeModified = likedUser.ReceivedLikesFrom;
+
+            if (likesToBeModified.Contains(loggedUser.Id))
+            {
+                likesToBeModified.Remove(loggedUser.Id);
+            }
+            else
+            {
+                likesToBeModified.Add(loggedUser.Id);
+            }
+
+            //likedUser.ReceivedLikesFrom = likesToBeModified;
+
             _context.SaveChanges();
 
             return RedirectToAction("SeeAccount", new {id = id});
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
