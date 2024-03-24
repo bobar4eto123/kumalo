@@ -25,7 +25,14 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item-home">
-                            <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">kumalo</a>
+                            @if (!(ViewData["IsEditAccountPage"] as bool? ?? false))
+                            {
+                                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">kumalo</a>
+                            }
+                            else
+                            {
+                                <a class="navbar-brand text-white">kumalo</a>
+                            }
                         </li>
 					</ul>
 					<ul class="navbar-nav">
